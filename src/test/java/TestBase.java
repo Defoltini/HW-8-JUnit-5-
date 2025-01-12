@@ -4,16 +4,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.open;
 
 public class TestBase {
-    @BeforeAll
-    static void beforeAll() {
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.browserSize= "1920x1080";
-        Configuration.baseUrl = "https://www.ozon.ru/";
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
-            }
+   // @BeforeAll
+  //  static void beforeAll() {
+      //  open("https://www.wildberries.ru/");
+  //      Configuration.pageLoadStrategy = "eager";
+       // Configuration.browserSize= "1920x1080";
+
+
+  //          }
 
     @AfterEach
     void closeWebDriver() {
