@@ -1,5 +1,5 @@
 public enum Currency {
-    KGS("сом"),
+    AMD("драм"),
     KZT("тг.");
     public final String description;
     Currency(String description) {

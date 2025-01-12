@@ -13,48 +13,52 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class WBTests extends TestBase{
-@Tag("High")
-@Tag("Smoke")
-@CsvSource({
-        "брюки",
-        "кофта"
-})
-@ParameterizedTest (name = "Проверка поиска по слову {0}")
-void checkSearchWB(String clothes){
-    open("https://www.wildberries.ru/");
-    $("#searchInput").setValue(clothes);
-    $("#applySearchBtn").click();
-    $("#mainContainer").shouldHave(text(clothes));
-}
-@EnumSource(Currency.class)
+    @Tag("High")
+    @Tag("Smoke")
+    @CsvSource({
+            "брюки",
+            "кофта"
+    })
+    @ParameterizedTest (name = "Проверка поиска по слову {0}")
+    void checkSearchWB(String clothes){
+        open("https://www.wildberries.ru/");
+        $("#searchInput").setValue(clothes);
+        $("#applySearchBtn").click();
+        $("#mainContainer").shouldHave(text(clothes));
+    }
+    @EnumSource(Currency.class)
     @Tag("High")
     @Tag("Smoke")
     @ParameterizedTest
     void checkСurrencyOnStartPage(Currency currency){
-    open("https://www.wildberries.ru/");
+        open("https://www.wildberries.ru/");
 
-    $("[data-wba-header-name='Country']").click();
-    $$(".country__item.j-b-change-settings").find(text(currency.name())).click();
-    $("#body-layout").shouldHave(text(currency.description));
+        $(".header__wrap").click();
+        $$(".country__wrap").find(text(currency.name())).click();
+        $(".main-page__content").shouldHave(text(currency.description));
     }
     static Stream<Arguments> checkСurrencyOnStartPageWithMethodSource(){
         return Stream.of(
                 Arguments.of(
-                        Currency.KGS,
-                        List.of("сом")
+                        Currency.AMD,
+                        List.of("драм")
                 ),
                 Arguments.of(
                         Currency.KZT,
                         List.of("тг.")));
-    }
+   }
     @MethodSource
     @ParameterizedTest
     void checkСurrencyOnStartPageWithMethodSource(Currency currency, List<String> expectedCurrency){
         open("https://www.wildberries.ru/");
 
-    $("[data-wba-header-name='Country']").click();
-    $$(".country__item.j-b-change-settings").find(text(currency.name())).click();
-    $("#body-layout").shouldHave(text(expectedCurrency));
+        $(".header__wrap").click();
+        $$(".country__wrap").find(text(currency.name())).click();
+
+        // Проверяем, что текст в элементе содержит хотя бы одну из ожиданий
+        for (String currencyText : expectedCurrency) {
+            $("#body-layout").shouldHave(text(currencyText));
+        }
     }
 
 }
