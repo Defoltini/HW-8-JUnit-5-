@@ -55,7 +55,6 @@ public class WBTests extends TestBase{
         $(".header__wrap").click();
         $$(".country__wrap").find(text(currency.name())).click();
 
-        // Проверяем, что текст в элементе содержит хотя бы одну из ожиданий
         for (String currencyText : expectedCurrency) {
             $("#body-layout").shouldHave(text(currencyText));
         }
